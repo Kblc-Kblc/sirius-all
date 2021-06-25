@@ -1557,16 +1557,12 @@ body.ie ._ibg img {
   display: flex;
   display: none;
   visibility: hidden;
-  width: 1040px;
+  width: 107%;
   padding: 50px 20px 20px 20px;
 }
 
 .hover-header__columns {
   width: 140px;
-}
-
-.hover-header__columns:last-child {
-  width: 220px;
 }
 
 .hover-header__columns:nth-child(4) {
@@ -1577,6 +1573,15 @@ body.ie ._ibg img {
 .hover-header__columns:nth-child(5) {
   padding: 0px 0px 0px 40px;
   width: 200px;
+}
+
+.hover-header__columns:nth-child(6) {
+  margin: 0px auto;
+}
+
+.hover-header__columns:nth-child(7) {
+  margin: 0px auto;
+  padding: 0px 0px 0px 0px;
 }
 
 .hover-header__list {
