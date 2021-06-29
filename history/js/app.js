@@ -1,204 +1,3 @@
-// Dynamic Adapt v.1
-// HTML data-da="where(uniq class name),when(breakpoint),position(digi)"
-// e.x. data-da=".item,992,2"
-// Andrikanych Yevhen 2020
-// https://www.youtube.com/c/freelancerlifestyle
-
-"use strict";
-
-
-function DynamicAdapt(type) {
-	this.type = type;
-}
-
-DynamicAdapt.prototype.init = function () {
-	const _this = this;
-	// массив объектов
-	this.оbjects = [];
-	this.daClassname = "_dynamic_adapt_";
-	// массив DOM-элементов
-	this.nodes = document.querySelectorAll("[data-da]");
-
-	// наполнение оbjects объктами
-	for (let i = 0; i < this.nodes.length; i++) {
-		const node = this.nodes[i];
-		const data = node.dataset.da.trim();
-		const dataArray = data.split(",");
-		const оbject = {};
-		оbject.element = node;
-		оbject.parent = node.parentNode;
-		оbject.destination = document.querySelector(dataArray[0].trim());
-		оbject.breakpoint = dataArray[1] ? dataArray[1].trim() : "767";
-		оbject.place = dataArray[2] ? dataArray[2].trim() : "last";
-		оbject.index = this.indexInParent(оbject.parent, оbject.element);
-		this.оbjects.push(оbject);
-	}
-
-	this.arraySort(this.оbjects);
-
-	// массив уникальных медиа-запросов
-	this.mediaQueries = Array.prototype.map.call(this.оbjects, function (item) {
-		return '(' + this.type + "-width: " + item.breakpoint + "px)," + item.breakpoint;
-	}, this);
-	this.mediaQueries = Array.prototype.filter.call(this.mediaQueries, function (item, index, self) {
-		return Array.prototype.indexOf.call(self, item) === index;
-	});
-
-	// навешивание слушателя на медиа-запрос
-	// и вызов обработчика при первом запуске
-	for (let i = 0; i < this.mediaQueries.length; i++) {
-		const media = this.mediaQueries[i];
-		const mediaSplit = String.prototype.split.call(media, ',');
-		const matchMedia = window.matchMedia(mediaSplit[0]);
-		const mediaBreakpoint = mediaSplit[1];
-
-		// массив объектов с подходящим брейкпоинтом
-		const оbjectsFilter = Array.prototype.filter.call(this.оbjects, function (item) {
-			return item.breakpoint === mediaBreakpoint;
-		});
-		matchMedia.addListener(function () {
-			_this.mediaHandler(matchMedia, оbjectsFilter);
-		});
-		this.mediaHandler(matchMedia, оbjectsFilter);
-	}
-};
-
-DynamicAdapt.prototype.mediaHandler = function (matchMedia, оbjects) {
-	if (matchMedia.matches) {
-		for (let i = 0; i < оbjects.length; i++) {
-			const оbject = оbjects[i];
-			оbject.index = this.indexInParent(оbject.parent, оbject.element);
-			this.moveTo(оbject.place, оbject.element, оbject.destination);
-		}
-	} else {
-		for (let i = 0; i < оbjects.length; i++) {
-			const оbject = оbjects[i];
-			if (оbject.element.classList.contains(this.daClassname)) {
-				this.moveBack(оbject.parent, оbject.element, оbject.index);
-			}
-		}
-	}
-};
-
-// Функция перемещения
-DynamicAdapt.prototype.moveTo = function (place, element, destination) {
-	element.classList.add(this.daClassname);
-	if (place === 'last' || place >= destination.children.length) {
-		destination.insertAdjacentElement('beforeend', element);
-		return;
-	}
-	if (place === 'first') {
-		destination.insertAdjacentElement('afterbegin', element);
-		return;
-	}
-	destination.children[place].insertAdjacentElement('beforebegin', element);
-}
-
-// Функция возврата
-DynamicAdapt.prototype.moveBack = function (parent, element, index) {
-	element.classList.remove(this.daClassname);
-	if (parent.children[index] !== undefined) {
-		parent.children[index].insertAdjacentElement('beforebegin', element);
-	} else {
-		parent.insertAdjacentElement('beforeend', element);
-	}
-}
-
-// Функция получения индекса внутри родителя
-DynamicAdapt.prototype.indexInParent = function (parent, element) {
-	const array = Array.prototype.slice.call(parent.children);
-	return Array.prototype.indexOf.call(array, element);
-};
-
-// Функция сортировки массива по breakpoint и place 
-// по возрастанию для this.type = min
-// по убыванию для this.type = max
-DynamicAdapt.prototype.arraySort = function (arr) {
-	if (this.type === "min") {
-		Array.prototype.sort.call(arr, function (a, b) {
-			if (a.breakpoint === b.breakpoint) {
-				if (a.place === b.place) {
-					return 0;
-				}
-
-				if (a.place === "first" || b.place === "last") {
-					return -1;
-				}
-
-				if (a.place === "last" || b.place === "first") {
-					return 1;
-				}
-
-				return a.place - b.place;
-			}
-
-			return a.breakpoint - b.breakpoint;
-		});
-	} else {
-		Array.prototype.sort.call(arr, function (a, b) {
-			if (a.breakpoint === b.breakpoint) {
-				if (a.place === b.place) {
-					return 0;
-				}
-
-				if (a.place === "first" || b.place === "last") {
-					return 1;
-				}
-
-				if (a.place === "last" || b.place === "first") {
-					return -1;
-				}
-
-				return b.place - a.place;
-			}
-
-			return b.breakpoint - a.breakpoint;
-		});
-		return;
-	}
-};
-
-const da = new DynamicAdapt("max");
-da.init();
-function email_test(input) {
-	return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(input.value);
-}
-
-document.getElementById('file').addEventListener('change', function (e) {
-    // Проверяем, что только 1 файл был выбран
-    if (this.files && this.files.length == 1) {
-        const textDelete = document.querySelector(".field-file__icon");
-        textDelete.style.display = 'none'
-
-        const textDeleteBefore = document.querySelector(".field-file__label--text");
-        textDeleteBefore.style.display = 'block'
-
-        const textDeleteClear = document.querySelector(".clear");
-        textDeleteClear.style.display = 'block'
-
-        const textContainer = this.nextElementSibling.querySelector('.field-file__label--text');
-        const fileName = e.target.value.split('\\').pop();
-        if (textContainer) {
-            textContainer.textContent = fileName || 'Выберите файл для загрузки';
-            return true;
-        }
-    }
-    return false;
-});
-
-
-
-
-
-let clearButtonForm = document.querySelector(".clear")
-let inputFile = document.querySelector(".field-file__label--text")
-
-clearButtonForm.addEventListener('click', () => {
-    inputFile.innerHTML = '';
-})
-
-
-
 var ua = window.navigator.userAgent;
 var msie = ua.indexOf("MSIE ");
 var isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
@@ -858,6 +657,460 @@ let myFunctionSeven = function () {
 for (let i = 0; i < dropdownSeven.length; i++) {
 	dropdownSeven[i].addEventListener('click', myFunctionSeven, false);
 }
+
+
+// function map(n) {
+// 	google.maps.Map.prototype.setCenterWithOffset = function (latlng, offsetX, offsetY) {
+// 		var map = this;
+// 		var ov = new google.maps.OverlayView();
+// 		ov.onAdd = function () {
+// 			var proj = this.getProjection();
+// 			var aPoint = proj.fromLatLngToContainerPixel(latlng);
+// 			aPoint.x = aPoint.x + offsetX;
+// 			aPoint.y = aPoint.y + offsetY;
+// 			map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+// 			//map.setCenter(proj.fromContainerPixelToLatLng(aPoint));
+// 		}
+// 		ov.draw = function () { };
+// 		ov.setMap(this);
+// 	};
+// 	var markers = new Array();
+// 	var infowindow = new google.maps.InfoWindow({
+// 		//pixelOffset: new google.maps.Size(-230,250)
+// 	});
+// 	var locations = [
+// 		[new google.maps.LatLng(53.819055, 27.8813694)],
+// 		[new google.maps.LatLng(53.700055, 27.5513694)],
+// 		[new google.maps.LatLng(53.809055, 27.5813694)],
+// 		[new google.maps.LatLng(53.859055, 27.5013694)],
+// 	]
+// 	var options = {
+// 		zoom: 10,
+// 		panControl: false,
+// 		mapTypeControl: false,
+// 		center: locations[0][0],
+// 		styles: [{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#e0efef" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "hue": "#1900ff" }, { "color": "#c0e8e8" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 100 }, { "visibility": "simplified" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "lightness": 700 }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#7dcdcd" }] }],
+// 		scrollwheel: false,
+// 		mapTypeId: google.maps.MapTypeId.ROADMAP
+// 	};
+// 	var map = new google.maps.Map(document.getElementById('map'), options);
+// 	var icon = {
+// 		url: 'img/icons/map.svg',
+// 		scaledSize: new google.maps.Size(18, 20),
+// 		anchor: new google.maps.Point(9, 10)
+// 	}
+// 	for (var i = 0; i < locations.length; i++) {
+// 		var marker = new google.maps.Marker({
+// 			icon: icon,
+// 			position: locations[i][0],
+// 			map: map,
+// 		});
+// 		google.maps.event.addListener(marker, 'click', (function (marker, i) {
+// 			return function () {
+// 				for (var m = 0; m < markers.length; m++) {
+// 					markers[m].setIcon(icon);
+// 				}
+// 				var cnt = i + 1;
+// 				//infowindow.setContent($('.contacts-map-item_' + cnt).html());
+// 				infowindow.open(map, marker);
+// 				marker.setIcon(icon);
+// 				map.setCenterWithOffset(marker.getPosition(), 0, 0);
+// 				setTimeout(function () {
+// 					baloonstyle();
+// 				}, 10);
+// 			}
+// 		})(marker, i));
+// 		markers.push(marker);
+// 	}
+
+// 	if (n) {
+// 		var nc = n - 1;
+// 		setTimeout(function () {
+// 			google.maps.event.trigger(markers[nc], 'click');
+// 		}, 500);
+// 	}
+// }
+
+//map(1);
+
+
+/* YA
+function map(n) {
+	ymaps.ready(init);
+	function init() {
+		// Создание карты.
+		var myMap = new ymaps.Map("map", {
+			// Координаты центра карты.
+			// Порядок по умолчанию: «широта, долгота».
+			// Чтобы не определять координаты центра карты вручную,
+			// воспользуйтесь инструментом Определение координат.
+			controls: [],
+			center: [43.585525, 39.723062],
+			// Уровень масштабирования. Допустимые значения:
+			// от 0 (весь мир) до 19.
+			zoom: 10
+		});
+
+		let myPlacemark = new ymaps.Placemark([43.585525, 39.723062], {
+		},{
+			// Опции.
+			//balloonContentHeader: 'Mistoun',
+			//balloonContentBody: 'Москва, Николоямская 40с1',
+			//balloonContentFooter: '+ 7(495) 507-54 - 90',
+			//hasBalloon: true,
+			//hideIconOnBalloonOpen: true,
+
+			hasBalloon: false,
+			hideIconOnBalloonOpen: false,
+			// Необходимо указать данный тип макета.
+			iconLayout: 'default#imageWithContent',
+			// Своё изображение иконки метки.
+			iconImageHref: 'img/icons/map.svg',
+			// Размеры метки.
+			iconImageSize: [40, 40],
+			// Смещение левого верхнего угла иконки относительно
+			// её "ножки" (точки привязки).
+			iconImageOffset: [-20, -20],
+			// Смещение слоя с содержимым относительно слоя с картинкой.
+			iconContentOffset: [0, 0],
+		});
+		myMap.geoObjects.add(myPlacemark);
+
+		myMap.behaviors.disable('scrollZoom');
+		myMap.behaviors.disable('drag');
+	}
+}
+*/
+// mapboxgl.accessToken = 'pk.eyJ1Ijoia2JsY2tibGMiLCJhIjoiY2twemRqbHhpMGdkejJzcnJxc2k5bTF4ZSJ9.TI_qgTL9s5qI_AfmrUhPGA';
+// let maps = new mapboxgl.Map({
+// 	container: 'map2', // container id
+// 	style: 'mapbox://styles/mapbox/streets-v11', // style URL
+// 	center: [-74.5, 40], // starting position [lng, lat]
+// 	zoom: 3 // starting zoom
+// });
+
+
+
+// mapboxgl.accessToken = 'pk.eyJ1Ijoia2JsY2tibGMiLCJhIjoiY2twemRqbHhpMGdkejJzcnJxc2k5bTF4ZSJ9.TI_qgTL9s5qI_AfmrUhPGA';
+// let map = new mapboxgl.Map({
+// 	container: 'map',
+// 	style: 'mapbox://styles/mapbox/streets-v11',
+// 	center: [-98, 38.88],
+// 	minZoom: 2,
+// 	zoom: 3
+// });
+
+// map.on('load', function () {
+// 	// Add a custom vector tileset source. The tileset used in
+// 	// this example contains a feature for every county in the U.S.
+// 	// Each county contains four properties. For example:
+// 	// {
+// 	//     COUNTY: "Uintah County",
+// 	//     FIPS: 49047,
+// 	//     median-income: 62363,
+// 	//     population: 34576
+// 	// }
+// 	map.addSource('counties', {
+// 		'type': 'vector',
+// 		'url': 'mapbox://mapbox.82pkq93d'
+// 	});
+
+// 	map.addLayer(
+// 		{
+// 			'id': 'counties',
+// 			'type': 'fill',
+// 			'source': 'counties',
+// 			'source-layer': 'original',
+// 			'paint': {
+// 				'fill-outline-color': 'rgba(0,0,0,0.1)',
+// 				'fill-color': 'rgba(0,0,0,0.1)'
+// 			}
+// 		},
+// 		'settlement-label'
+// 	); // Place polygon under these labels.
+
+// 	map.addLayer(
+// 		{
+// 			'id': 'counties-highlighted',
+// 			'type': 'fill',
+// 			'source': 'counties',
+// 			'source-layer': 'original',
+// 			'paint': {
+// 				'fill-outline-color': '#484896',
+// 				'fill-color': '#6e599f',
+// 				'fill-opacity': 0.75
+// 			},
+// 			'filter': ['in', 'FIPS', '']
+// 		},
+// 		'settlement-label'
+// 	); // Place polygon under these labels.
+
+// 	map.on('click', function (e) {
+// 		// set bbox as 5px reactangle area around clicked point
+// 		var bbox = [
+// 			[e.point.x - 5, e.point.y - 5],
+// 			[e.point.x + 5, e.point.y + 5]
+// 		];
+// 		var features = map.queryRenderedFeatures(bbox, {
+// 			layers: ['counties']
+// 		});
+
+// 		// Run through the selected features and set a filter
+// 		// to match features with unique FIPS codes to activate
+// 		// the `counties-highlighted` layer.
+// 		var filter = features.reduce(
+// 			function (memo, feature) {
+// 				memo.push(feature.properties.FIPS);
+// 				return memo;
+// 			},
+// 			['in', 'FIPS']
+// 		);
+
+// 		map.setFilter('counties-highlighted', filter);
+// 	});
+// });
+
+
+
+
+function initMap() {
+	const map = new google.maps.Map(document.getElementById("map"), {
+		zoom: 8,
+		center: { lat: -34.397, lng: 150.644 },
+	});
+	const mapTwo = new google.maps.Map(document.getElementById("map2"), {
+		zoom: 8,
+		center: { lat: -34.397, lng: 150.644 },
+	});
+	const geocoder = new google.maps.Geocoder();
+	document.getElementById("submit").addEventListener("click", () => {
+		geocodeAddress(geocoder, map);
+	});
+	const geocoderr = new google.maps.Geocoder();
+	document.getElementById("submit").addEventListener("click", () => {
+		geocodeAddress(geocoderr, map);
+	});
+}
+
+function geocodeAddress(geocoder, resultsMap) {
+	const address = document.getElementById("address").value;
+	geocoder
+		.geocode({ address: address })
+		.then(({ results }) => {
+			resultsMap.setCenter(results[0].geometry.location);
+			new google.maps.Marker({
+				map: resultsMap,
+				position: results[0].geometry.location,
+			});
+		})
+		.catch((e) =>
+			alert("Geocode was not successful for the following reason: " + e)
+		);
+}
+
+
+
+
+
+// Dynamic Adapt v.1
+// HTML data-da="where(uniq class name),when(breakpoint),position(digi)"
+// e.x. data-da=".item,992,2"
+// Andrikanych Yevhen 2020
+// https://www.youtube.com/c/freelancerlifestyle
+
+"use strict";
+
+
+function DynamicAdapt(type) {
+	this.type = type;
+}
+
+DynamicAdapt.prototype.init = function () {
+	const _this = this;
+	// массив объектов
+	this.оbjects = [];
+	this.daClassname = "_dynamic_adapt_";
+	// массив DOM-элементов
+	this.nodes = document.querySelectorAll("[data-da]");
+
+	// наполнение оbjects объктами
+	for (let i = 0; i < this.nodes.length; i++) {
+		const node = this.nodes[i];
+		const data = node.dataset.da.trim();
+		const dataArray = data.split(",");
+		const оbject = {};
+		оbject.element = node;
+		оbject.parent = node.parentNode;
+		оbject.destination = document.querySelector(dataArray[0].trim());
+		оbject.breakpoint = dataArray[1] ? dataArray[1].trim() : "767";
+		оbject.place = dataArray[2] ? dataArray[2].trim() : "last";
+		оbject.index = this.indexInParent(оbject.parent, оbject.element);
+		this.оbjects.push(оbject);
+	}
+
+	this.arraySort(this.оbjects);
+
+	// массив уникальных медиа-запросов
+	this.mediaQueries = Array.prototype.map.call(this.оbjects, function (item) {
+		return '(' + this.type + "-width: " + item.breakpoint + "px)," + item.breakpoint;
+	}, this);
+	this.mediaQueries = Array.prototype.filter.call(this.mediaQueries, function (item, index, self) {
+		return Array.prototype.indexOf.call(self, item) === index;
+	});
+
+	// навешивание слушателя на медиа-запрос
+	// и вызов обработчика при первом запуске
+	for (let i = 0; i < this.mediaQueries.length; i++) {
+		const media = this.mediaQueries[i];
+		const mediaSplit = String.prototype.split.call(media, ',');
+		const matchMedia = window.matchMedia(mediaSplit[0]);
+		const mediaBreakpoint = mediaSplit[1];
+
+		// массив объектов с подходящим брейкпоинтом
+		const оbjectsFilter = Array.prototype.filter.call(this.оbjects, function (item) {
+			return item.breakpoint === mediaBreakpoint;
+		});
+		matchMedia.addListener(function () {
+			_this.mediaHandler(matchMedia, оbjectsFilter);
+		});
+		this.mediaHandler(matchMedia, оbjectsFilter);
+	}
+};
+
+DynamicAdapt.prototype.mediaHandler = function (matchMedia, оbjects) {
+	if (matchMedia.matches) {
+		for (let i = 0; i < оbjects.length; i++) {
+			const оbject = оbjects[i];
+			оbject.index = this.indexInParent(оbject.parent, оbject.element);
+			this.moveTo(оbject.place, оbject.element, оbject.destination);
+		}
+	} else {
+		for (let i = 0; i < оbjects.length; i++) {
+			const оbject = оbjects[i];
+			if (оbject.element.classList.contains(this.daClassname)) {
+				this.moveBack(оbject.parent, оbject.element, оbject.index);
+			}
+		}
+	}
+};
+
+// Функция перемещения
+DynamicAdapt.prototype.moveTo = function (place, element, destination) {
+	element.classList.add(this.daClassname);
+	if (place === 'last' || place >= destination.children.length) {
+		destination.insertAdjacentElement('beforeend', element);
+		return;
+	}
+	if (place === 'first') {
+		destination.insertAdjacentElement('afterbegin', element);
+		return;
+	}
+	destination.children[place].insertAdjacentElement('beforebegin', element);
+}
+
+// Функция возврата
+DynamicAdapt.prototype.moveBack = function (parent, element, index) {
+	element.classList.remove(this.daClassname);
+	if (parent.children[index] !== undefined) {
+		parent.children[index].insertAdjacentElement('beforebegin', element);
+	} else {
+		parent.insertAdjacentElement('beforeend', element);
+	}
+}
+
+// Функция получения индекса внутри родителя
+DynamicAdapt.prototype.indexInParent = function (parent, element) {
+	const array = Array.prototype.slice.call(parent.children);
+	return Array.prototype.indexOf.call(array, element);
+};
+
+// Функция сортировки массива по breakpoint и place 
+// по возрастанию для this.type = min
+// по убыванию для this.type = max
+DynamicAdapt.prototype.arraySort = function (arr) {
+	if (this.type === "min") {
+		Array.prototype.sort.call(arr, function (a, b) {
+			if (a.breakpoint === b.breakpoint) {
+				if (a.place === b.place) {
+					return 0;
+				}
+
+				if (a.place === "first" || b.place === "last") {
+					return -1;
+				}
+
+				if (a.place === "last" || b.place === "first") {
+					return 1;
+				}
+
+				return a.place - b.place;
+			}
+
+			return a.breakpoint - b.breakpoint;
+		});
+	} else {
+		Array.prototype.sort.call(arr, function (a, b) {
+			if (a.breakpoint === b.breakpoint) {
+				if (a.place === b.place) {
+					return 0;
+				}
+
+				if (a.place === "first" || b.place === "last") {
+					return 1;
+				}
+
+				if (a.place === "last" || b.place === "first") {
+					return -1;
+				}
+
+				return b.place - a.place;
+			}
+
+			return b.breakpoint - a.breakpoint;
+		});
+		return;
+	}
+};
+
+const da = new DynamicAdapt("max");
+da.init();
+function email_test(input) {
+	return !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(input.value);
+}
+
+document.getElementById('file').addEventListener('change', function (e) {
+    // Проверяем, что только 1 файл был выбран
+    if (this.files && this.files.length == 1) {
+        const textDelete = document.querySelector(".field-file__icon");
+        textDelete.style.display = 'none'
+
+        const textDeleteBefore = document.querySelector(".field-file__label--text");
+        textDeleteBefore.style.display = 'block'
+
+        const textDeleteClear = document.querySelector(".clear");
+        textDeleteClear.style.display = 'block'
+
+        const textContainer = this.nextElementSibling.querySelector('.field-file__label--text');
+        const fileName = e.target.value.split('\\').pop();
+        if (textContainer) {
+            textContainer.textContent = fileName || 'Выберите файл для загрузки';
+            return true;
+        }
+    }
+    return false;
+});
+
+
+
+
+
+let clearButtonForm = document.querySelector(".clear")
+let inputFile = document.querySelector(".field-file__label--text")
+
+clearButtonForm.addEventListener('click', () => {
+    inputFile.innerHTML = '';
+})
+
 
 
 //let btn = document.querySelectorAll('button[type="submit"],input[type="submit"]');
@@ -2064,207 +2317,5 @@ let feed_slider = new Swiper('.slider-catalor-feed__content', {
 });
 
 
-// function map(n) {
-// 	google.maps.Map.prototype.setCenterWithOffset = function (latlng, offsetX, offsetY) {
-// 		var map = this;
-// 		var ov = new google.maps.OverlayView();
-// 		ov.onAdd = function () {
-// 			var proj = this.getProjection();
-// 			var aPoint = proj.fromLatLngToContainerPixel(latlng);
-// 			aPoint.x = aPoint.x + offsetX;
-// 			aPoint.y = aPoint.y + offsetY;
-// 			map.panTo(proj.fromContainerPixelToLatLng(aPoint));
-// 			//map.setCenter(proj.fromContainerPixelToLatLng(aPoint));
-// 		}
-// 		ov.draw = function () { };
-// 		ov.setMap(this);
-// 	};
-// 	var markers = new Array();
-// 	var infowindow = new google.maps.InfoWindow({
-// 		//pixelOffset: new google.maps.Size(-230,250)
-// 	});
-// 	var locations = [
-// 		[new google.maps.LatLng(53.819055, 27.8813694)],
-// 		[new google.maps.LatLng(53.700055, 27.5513694)],
-// 		[new google.maps.LatLng(53.809055, 27.5813694)],
-// 		[new google.maps.LatLng(53.859055, 27.5013694)],
-// 	]
-// 	var options = {
-// 		zoom: 10,
-// 		panControl: false,
-// 		mapTypeControl: false,
-// 		center: locations[0][0],
-// 		styles: [{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#e0efef" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "hue": "#1900ff" }, { "color": "#c0e8e8" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 100 }, { "visibility": "simplified" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "lightness": 700 }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#7dcdcd" }] }],
-// 		scrollwheel: false,
-// 		mapTypeId: google.maps.MapTypeId.ROADMAP
-// 	};
-// 	var map = new google.maps.Map(document.getElementById('map'), options);
-// 	var icon = {
-// 		url: 'img/icons/map.svg',
-// 		scaledSize: new google.maps.Size(18, 20),
-// 		anchor: new google.maps.Point(9, 10)
-// 	}
-// 	for (var i = 0; i < locations.length; i++) {
-// 		var marker = new google.maps.Marker({
-// 			icon: icon,
-// 			position: locations[i][0],
-// 			map: map,
-// 		});
-// 		google.maps.event.addListener(marker, 'click', (function (marker, i) {
-// 			return function () {
-// 				for (var m = 0; m < markers.length; m++) {
-// 					markers[m].setIcon(icon);
-// 				}
-// 				var cnt = i + 1;
-// 				//infowindow.setContent($('.contacts-map-item_' + cnt).html());
-// 				infowindow.open(map, marker);
-// 				marker.setIcon(icon);
-// 				map.setCenterWithOffset(marker.getPosition(), 0, 0);
-// 				setTimeout(function () {
-// 					baloonstyle();
-// 				}, 10);
-// 			}
-// 		})(marker, i));
-// 		markers.push(marker);
-// 	}
-
-// 	if (n) {
-// 		var nc = n - 1;
-// 		setTimeout(function () {
-// 			google.maps.event.trigger(markers[nc], 'click');
-// 		}, 500);
-// 	}
-// }
-
-//map(1);
-
-
-/* YA
-function map(n) {
-	ymaps.ready(init);
-	function init() {
-		// Создание карты.
-		var myMap = new ymaps.Map("map", {
-			// Координаты центра карты.
-			// Порядок по умолчанию: «широта, долгота».
-			// Чтобы не определять координаты центра карты вручную,
-			// воспользуйтесь инструментом Определение координат.
-			controls: [],
-			center: [43.585525, 39.723062],
-			// Уровень масштабирования. Допустимые значения:
-			// от 0 (весь мир) до 19.
-			zoom: 10
-		});
-
-		let myPlacemark = new ymaps.Placemark([43.585525, 39.723062], {
-		},{
-			// Опции.
-			//balloonContentHeader: 'Mistoun',
-			//balloonContentBody: 'Москва, Николоямская 40с1',
-			//balloonContentFooter: '+ 7(495) 507-54 - 90',
-			//hasBalloon: true,
-			//hideIconOnBalloonOpen: true,
-
-			hasBalloon: false,
-			hideIconOnBalloonOpen: false,
-			// Необходимо указать данный тип макета.
-			iconLayout: 'default#imageWithContent',
-			// Своё изображение иконки метки.
-			iconImageHref: 'img/icons/map.svg',
-			// Размеры метки.
-			iconImageSize: [40, 40],
-			// Смещение левого верхнего угла иконки относительно
-			// её "ножки" (точки привязки).
-			iconImageOffset: [-20, -20],
-			// Смещение слоя с содержимым относительно слоя с картинкой.
-			iconContentOffset: [0, 0],
-		});
-		myMap.geoObjects.add(myPlacemark);
-
-		myMap.behaviors.disable('scrollZoom');
-		myMap.behaviors.disable('drag');
-	}
-}
-*/
-
-
-mapboxgl.accessToken = 'pk.eyJ1Ijoia2JsY2tibGMiLCJhIjoiY2twemRqbHhpMGdkejJzcnJxc2k5bTF4ZSJ9.TI_qgTL9s5qI_AfmrUhPGA';
-var map = new mapboxgl.Map({
-	container: 'map',
-	style: 'mapbox://styles/mapbox/streets-v11',
-	center: [-98, 38.88],
-	minZoom: 2,
-	zoom: 3
-});
-
-map.on('load', function () {
-	// Add a custom vector tileset source. The tileset used in
-	// this example contains a feature for every county in the U.S.
-	// Each county contains four properties. For example:
-	// {
-	//     COUNTY: "Uintah County",
-	//     FIPS: 49047,
-	//     median-income: 62363,
-	//     population: 34576
-	// }
-	map.addSource('counties', {
-		'type': 'vector',
-		'url': 'mapbox://mapbox.82pkq93d'
-	});
-
-	map.addLayer(
-		{
-			'id': 'counties',
-			'type': 'fill',
-			'source': 'counties',
-			'source-layer': 'original',
-			'paint': {
-				'fill-outline-color': 'rgba(0,0,0,0.1)',
-				'fill-color': 'rgba(0,0,0,0.1)'
-			}
-		},
-		'settlement-label'
-	); // Place polygon under these labels.
-
-	map.addLayer(
-		{
-			'id': 'counties-highlighted',
-			'type': 'fill',
-			'source': 'counties',
-			'source-layer': 'original',
-			'paint': {
-				'fill-outline-color': '#484896',
-				'fill-color': '#6e599f',
-				'fill-opacity': 0.75
-			},
-			'filter': ['in', 'FIPS', '']
-		},
-		'settlement-label'
-	); // Place polygon under these labels.
-
-	map.on('click', function (e) {
-		// set bbox as 5px reactangle area around clicked point
-		var bbox = [
-			[e.point.x - 5, e.point.y - 5],
-			[e.point.x + 5, e.point.y + 5]
-		];
-		var features = map.queryRenderedFeatures(bbox, {
-			layers: ['counties']
-		});
-
-		// Run through the selected features and set a filter
-		// to match features with unique FIPS codes to activate
-		// the `counties-highlighted` layer.
-		var filter = features.reduce(
-			function (memo, feature) {
-				memo.push(feature.properties.FIPS);
-				return memo;
-			},
-			['in', 'FIPS']
-		);
-
-		map.setFilter('counties-highlighted', filter);
-	});
-});
 
 
