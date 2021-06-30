@@ -5745,7 +5745,7 @@ body.ie ._ibg img {
 
 @media (min-width: 1192px) {
   .circle-friends {
-    height: 600px;
+    height: 540px;
   }
 
   .feed-cat {
@@ -8418,6 +8418,10 @@ body.ie ._ibg img {
     padding: 0px 00px 0px 00px;
   }
 
+  .event-item-info__date {
+    padding: 20px 0px 10px 0px;
+  }
+
   .event-gallery-arrows-left {
     top: 38%;
   }
@@ -8531,7 +8535,7 @@ body.ie ._ibg img {
 
 @media (max-width: 380px) {
   .event-gallery__columns img {
-    height: 180px;
+    height: 220px;
     margin: 0px auto;
   }
 }
