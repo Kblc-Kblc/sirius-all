@@ -8381,7 +8381,8 @@ body.ie ._ibg img {
   }
 
   .history-breadcrumbs__list li:nth-child(3):before {
-    padding: 12px 20px 0px 0px;
+    padding-top: 12px;
+    padding-right: 12px;
   }
 
   .history-breadcrumbs__list li:nth-child(4):before {
