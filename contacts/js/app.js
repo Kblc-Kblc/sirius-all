@@ -877,6 +877,12 @@ function initMap() {
 	const map = new google.maps.Map(document.getElementById("map"), {
 		zoom: 8,
 		center: { lat: -34.397, lng: 150.644 },
+		zoomControl: true,
+		mapTypeControl: false,
+		scaleControl: false,
+		streetViewControl: false,
+		rotateControl: false,
+		fullscreenControl: false
 	});
 	const mapTwo = new google.maps.Map(document.getElementById("map2"), {
 		zoom: 8,
@@ -888,7 +894,7 @@ function initMap() {
 	});
 	const geocoderr = new google.maps.Geocoder();
 	document.getElementById("submit").addEventListener("click", () => {
-		geocodeAddress(geocoderr, map);
+		geocodeAddress(geocoderr, mapTwo);
 	});
 }
 
