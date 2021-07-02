@@ -2893,16 +2893,21 @@ body.ie ._ibg img {
 
 .history-breadcrumbs {
   padding: 20px 0px;
+  width: 92vw;
 }
 
 .history-breadcrumbs__list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
 }
 
 .history-breadcrumbs__list li {
   z-index: 50;
+  display: inline;
+  width: 100%;
 }
 
 .history-breadcrumbs__list li:first-child a {
@@ -6053,15 +6058,6 @@ body.ie ._ibg img {
     right: 0%;
   }
 
-  .history-breadcrumbs__list li:nth-child(3) a {
-    white-space: nowrap;
-    /* Запрещаем перенос строк */
-    overflow: hidden;
-    /* Обрезаем все, что не помещается в область */
-    -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
-  }
-
   .pay-breadcrumbs-list li:nth-child(3) a {
     white-space: nowrap;
     /* Запрещаем перенос строк */
@@ -6958,15 +6954,6 @@ body.ie ._ibg img {
 
   .history-breadcrumbs__list li:nth-child(2):before {
     padding: 0px 20px 0px 0px;
-  }
-
-  .history-breadcrumbs__list li:nth-child(4) a {
-    white-space: nowrap;
-    /* Запрещаем перенос строк */
-    overflow: hidden;
-    /* Обрезаем все, что не помещается в область */
-    -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
   }
 
   .pay-breadcrumbs-list li:nth-child(2):before {
@@ -8376,12 +8363,6 @@ body.ie ._ibg img {
   .history-breadcrumbs__list li:nth-child(3) a {
     -o-text-overflow: ellipsis;
        text-overflow: ellipsis;
-    display: inline-block;
-    width: 50vw;
-  }
-
-  .history-breadcrumbs__list li:nth-child(3):before {
-    padding: 12px 20px 0px 0px;
   }
 
   .history-breadcrumbs__list li:nth-child(4):before {
@@ -8528,12 +8509,6 @@ body.ie ._ibg img {
   }
 }
 
-@media (max-width: 419px) {
-  .history-breadcrumbs__list li:nth-child(3) a {
-    width: 30vw;
-  }
-}
-
 @media (max-width: 414px) {
   .text-billboard {
     padding: 332px 0px 90px 50px;
@@ -8560,12 +8535,6 @@ body.ie ._ibg img {
 
   .slider-catalor-feed__arrow-next {
     right: 0;
-  }
-}
-
-@media (max-width: 350px) {
-  .history-breadcrumbs__list li:nth-child(3) a {
-    width: 23vw;
   }
 }
 
