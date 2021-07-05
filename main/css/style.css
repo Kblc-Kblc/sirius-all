@@ -1695,6 +1695,14 @@ body.ie ._ibg img {
   width: 140px;
 }
 
+.hover-header__columns:nth-child(2) {
+  padding: 0px 0px 0px 10px;
+}
+
+.hover-header__columns:nth-child(3) {
+  padding: 0px 0px 0px 25px;
+}
+
 .hover-header__columns:nth-child(4) {
   padding: 0px 0px 0px 40px;
   width: 160px;
@@ -1715,7 +1723,7 @@ body.ie ._ibg img {
 }
 
 .hover-header__list {
-  text-align: center;
+  text-align: left;
 }
 
 .hover-header__link {
