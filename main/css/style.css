@@ -6701,12 +6701,6 @@ body.ie ._ibg img {
   }
 }
 
-@media (max-width: 1192px) and (max-width: 413px) {
-  .bottom-header-mob__list._active {
-    padding: 30px 30px 30px 0px;
-  }
-}
-
 @media (max-width: 1024px) {
   .bottom-header-mob__list {
     top: 13%;
@@ -6884,6 +6878,13 @@ body.ie ._ibg img {
 
   .pay-tabs-all-link-none {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .bottom-header-mob__list {
+    top: 11%;
+    height: 50%;
   }
 }
 
