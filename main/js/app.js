@@ -1133,6 +1133,12 @@ function handleData() {
 
 }
 
+
+$(function () {
+    $('input[type="text"]').change(function () {
+        this.value = $.trim(this.value);
+    });
+});
 //let btn = document.querySelectorAll('button[type="submit"],input[type="submit"]');
 let forms = document.querySelectorAll('form');
 if (forms.length > 0) {

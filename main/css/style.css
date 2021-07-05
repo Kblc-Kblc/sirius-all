@@ -6714,6 +6714,12 @@ body.ie ._ibg img {
   }
 }
 
+@media (max-width: 1023px) {
+  .bottom-header-mob__list {
+    top: 30%;
+  }
+}
+
 @media (max-width: 991.98px) {
   ._container {
     max-width: 768px;
@@ -6878,139 +6884,6 @@ body.ie ._ibg img {
 
   .pay-tabs-all-link-none {
     display: none;
-  }
-}
-
-@media (max-width: 915px) {
-  .bottom-header-mob__list {
-    top: 30%;
-  }
-}
-
-@media (max-width: 914px) {
-  .bottom-header-mob__list {
-    top: 13%;
-  }
-}
-
-@media (max-width: 896px) {
-  .bottom-header-mob__list {
-    top: 29%;
-  }
-}
-
-@media (max-width: 895px) {
-  .bottom-header-mob__list {
-    top: 13%;
-    height: 64%;
-  }
-}
-
-@media (max-width: 892px) {
-  .bottom-header-mob__list {
-    top: 30%;
-  }
-}
-
-@media (max-width: 891px) {
-  .bottom-header-mob__list {
-    top: 13%;
-  }
-}
-
-@media (max-width: 869px) {
-  .bottom-header-mob__list {
-    top: 30%;
-  }
-}
-
-@media (max-width: 868px) {
-  .bottom-header-mob__list {
-    top: 13%;
-  }
-}
-
-@media (max-width: 851px) {
-  .bottom-header-mob__list {
-    top: 29%;
-  }
-}
-
-@media (max-width: 850px) {
-  .bottom-header-mob__list {
-    top: 13%;
-    height: 64%;
-  }
-}
-
-@media (max-width: 846px) {
-  .bottom-header-mob__list {
-    top: 30%;
-  }
-}
-
-@media (max-width: 845px) {
-  .bottom-header-mob__list {
-    top: 13%;
-  }
-}
-
-@media (max-width: 823px) {
-  .bottom-header-mob__list {
-    top: 28%;
-  }
-}
-
-@media (max-width: 822px) {
-  .bottom-header-mob__list {
-    top: 13%;
-    height: 64%;
-  }
-}
-
-@media (max-width: 812px) {
-  .bottom-header-mob__list {
-    top: 29%;
-    height: 69%;
-  }
-}
-
-@media (max-width: 811px) {
-  .bottom-header-mob__list {
-    top: 13%;
-    height: 64%;
-  }
-}
-
-@media (max-width: 786px) {
-  .bottom-header-mob__list {
-    top: 32%;
-  }
-}
-
-@media (max-width: 785px) {
-  .bottom-header-mob__list {
-    top: 13%;
-  }
-}
-
-@media (max-width: 780px) {
-  .bottom-header-mob__list {
-    top: 32%;
-  }
-}
-
-@media (max-width: 779px) {
-  .bottom-header-mob__list {
-    top: 13%;
-    height: 64%;
-  }
-}
-
-@media (max-width: 768px) {
-  .bottom-header-mob__list {
-    top: 11%;
-    height: 50%;
   }
 }
 
