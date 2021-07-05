@@ -6886,6 +6886,14 @@ body.ie ._ibg img {
     top: 11%;
     height: 50%;
   }
+
+  .video-slider-arrows-left {
+    left: 4%;
+  }
+
+  .video-slider-arrows-right {
+    right: 4%;
+  }
 }
 
 @media (max-width: 767.98px) {
@@ -7163,16 +7171,6 @@ body.ie ._ibg img {
 
   .video-slider__content {
     text-align: center;
-  }
-
-  .video-slider-arrows-left {
-    left: 4%;
-    top: 49%;
-  }
-
-  .video-slider-arrows-right {
-    right: 4%;
-    top: 49%;
   }
 
   .history-breadcrumbs__list li:nth-child(2):before {
