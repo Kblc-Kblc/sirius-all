@@ -6036,10 +6036,10 @@ body.ie ._ibg img {
         -ms-flex-align: end;
             align-items: flex-end;
     position: fixed;
-    top: 9%;
-    left: 21px;
-    width: 100%;
-    height: 80%;
+    top: 11%;
+    right: -10%;
+    width: 45%;
+    height: 50%;
     overflow: auto;
     -webkit-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
@@ -6057,7 +6057,7 @@ body.ie ._ibg img {
   .bottom-header-mob__list._active {
     opacity: 1;
     visibility: visible;
-    padding: 50px 60px 60px 0px;
+    padding: 60px 60px 60px 0px;
   }
 
   .icon-menu {
@@ -6158,6 +6158,10 @@ body.ie ._ibg img {
 
   .footer-content-two__line-one {
     padding: 40px 0px 0px 0px;
+  }
+
+  .billboard {
+    height: 924px;
   }
 
   .link-billboard {
@@ -6677,10 +6681,28 @@ body.ie ._ibg img {
   }
 }
 
+@media (max-width: 1192px) and (max-width: 479.98px) {
+  .bottom-header-mob__list._active {
+    padding: 30px 45px 30px 0px;
+  }
+}
+
+@media (max-width: 1192px) and (max-width: 414px) {
+  .bottom-header-mob__list._active {
+    padding: 30px 45px 30px 0px;
+  }
+}
+
+@media (max-width: 1192px) and (max-width: 413px) {
+  .bottom-header-mob__list._active {
+    padding: 30px 30px 30px 0px;
+  }
+}
+
 @media (max-width: 1024px) {
   .bottom-header-mob__list {
-    top: 14%;
-    height: 42%;
+    top: 13%;
+    height: 64%;
   }
 }
 
@@ -6754,7 +6776,7 @@ body.ie ._ibg img {
   }
 
   .text-billboard {
-    padding: 332px 0px 90px 0px;
+    padding: 426px 0px 90px 0px;
   }
 
   .cat-animals {
@@ -6853,21 +6875,35 @@ body.ie ._ibg img {
 
 @media (max-width: 823px) {
   .bottom-header-mob__list {
-    top: 29%;
+    top: 28%;
+  }
+}
+
+@media (max-width: 822px) {
+  .bottom-header-mob__list {
+    top: 13%;
+    height: 64%;
   }
 }
 
 @media (max-width: 812px) {
   .bottom-header-mob__list {
     top: 29%;
-    height: 62%;
+    height: 69%;
+  }
+}
+
+@media (max-width: 811px) {
+  .bottom-header-mob__list {
+    top: 13%;
+    height: 64%;
   }
 }
 
 @media (max-width: 768px) {
   .bottom-header-mob__list {
     top: 11%;
-    height: 69%;
+    height: 50%;
   }
 }
 
@@ -6891,7 +6927,9 @@ body.ie ._ibg img {
   }
 
   .bottom-header-mob__list {
-    top: 21%;
+    top: 12%;
+    width: 100%;
+    right: -14%;
   }
 
   .icon-menu {
@@ -7009,6 +7047,10 @@ body.ie ._ibg img {
 
   .billboard {
     height: 488px;
+  }
+
+  .text-billboard {
+    padding: 332px 0px 90px 207px;
   }
 
   .text-billboard h1 {
@@ -8311,13 +8353,61 @@ body.ie ._ibg img {
 
 @media (max-width: 736px) {
   .bottom-header-mob__list {
-    top: 28%;
+    top: 26%;
+  }
+}
+
+@media (max-width: 735px) {
+  .bottom-header-mob__list {
+    top: 12%;
+    width: 100%;
+    right: -14%;
+  }
+}
+
+@media (max-width: 731px) {
+  .bottom-header-mob__list {
+    top: 29%;
+  }
+}
+
+@media (max-width: 730px) {
+  .bottom-header-mob__list {
+    top: 12%;
+    width: 100%;
+    right: -14%;
   }
 }
 
 @media (max-width: 667px) {
+  .bottom-header-mob__list {
+    top: 29%;
+  }
+
   .text-billboard {
     padding: 332px 0px 90px 180px;
+  }
+}
+
+@media (max-width: 666px) {
+  .bottom-header-mob__list {
+    top: 12%;
+    width: 100%;
+    right: -14%;
+  }
+}
+
+@media (max-width: 640px) {
+  .bottom-header-mob__list {
+    top: 31%;
+  }
+}
+
+@media (max-width: 639px) {
+  .bottom-header-mob__list {
+    top: 12%;
+    width: 100%;
+    right: -14%;
   }
 }
 
@@ -8329,11 +8419,19 @@ body.ie ._ibg img {
 
 @media (max-width: 568px) {
   .bottom-header-mob__list {
-    top: 35%;
+    top: 34%;
   }
 
   .text-billboard {
     padding: 332px 0px 90px 130px;
+  }
+}
+
+@media (max-width: 567px) {
+  .bottom-header-mob__list {
+    top: 12%;
+    width: 100%;
+    right: -14%;
   }
 }
 
@@ -8431,7 +8529,9 @@ body.ie ._ibg img {
   }
 
   .bottom-header-mob__list {
-    top: 18%;
+    top: 14%;
+    right: -21%;
+    height: 80%;
   }
 
   .icon-menu {
@@ -8740,6 +8840,10 @@ body.ie ._ibg img {
 }
 
 @media (max-width: 340px) {
+  .bottom-header-mob__list {
+    top: 18%;
+  }
+
   .video-slider-arrows-left {
     left: 1%;
     top: 49%;
@@ -8776,11 +8880,6 @@ body.ie ._ibg img {
 }
 
 @media (max-width: 320px) {
-  .bottom-header-mob__list {
-    top: 19%;
-    height: 72%;
-  }
-
   .text-billboard {
     padding: 332px 0px 90px 0px;
   }
