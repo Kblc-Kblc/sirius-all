@@ -166,6 +166,18 @@ body._lock {
   margin: 0 auto;
 }
 
+.form__error {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 20px;
+  /* identical to box height, or 182% */
+  color: #ed1b33;
+}
+
 .btn {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -1037,10 +1049,12 @@ body.ie ._ibg img {
 }
 
 .connects-body__name {
+  position: relative;
   padding: 0px 0px 20px 0px;
 }
 
 .connects-body__name input {
+  width: 100%;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -1053,9 +1067,11 @@ body.ie ._ibg img {
 
 .connects-body__adress {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__adress input {
+  width: 100%;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -1068,9 +1084,11 @@ body.ie ._ibg img {
 
 .connects-body__mail {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__mail input {
+  width: 100%;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -1083,9 +1101,11 @@ body.ie ._ibg img {
 
 .connects-body__tel {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__tel input {
+  width: 100%;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -1098,9 +1118,11 @@ body.ie ._ibg img {
 
 .connects-body__comment {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__comment input {
+  width: 100%;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -1137,34 +1159,6 @@ body.ie ._ibg img {
   line-height: 20px;
   /* identical to box height, or 143% */
   color: #6a3f24;
-  padding: 0px 0px 0px 10px;
-}
-
-.connects-body-radio__columns input[type="radio"]:after {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  top: -1px;
-  left: -1px;
-  position: relative;
-  background-color: #ede4de;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid #6a3f24;
-}
-
-.connects-body-radio__columns input[type="radio"]:checked:after {
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  top: -1px;
-  left: -1px;
-  position: relative;
-  background-color: #6a3f24;
-  content: "";
-  display: inline-block;
-  visibility: visible;
 }
 
 .connects-body-file {
@@ -1237,17 +1231,7 @@ body.ie ._ibg img {
 
 .connects-body-check {
   padding: 0px 0px 30px 0px;
-}
-
-.connects-body-check label input {
-  display: none;
-  /* <--скрываем дефолтный чекбокс */
-}
-
-.connects-body-check label {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  position: relative;
 }
 
 .connects-body-check label p {
@@ -1257,40 +1241,6 @@ body.ie ._ibg img {
   line-height: 18px;
   color: #6a3f24;
   margin: -3px 0px 0px 0px;
-}
-
-.connects-body-check label span {
-  /* <-- стилизируем новый */
-  height: 14px;
-  width: 14px;
-  border: 1px solid #6a3f24;
-  display: inline-block;
-  position: relative;
-  background-color: #fff;
-  border-radius: 2px;
-  padding: 3px;
-  margin: 0px 10px 0px 0px;
-}
-
-.connects-body-check [type="checkbox"]:checked + span:before {
-  /* <-- ставим иконку, когда чекбокс включен  */
-  content: "\2714";
-  position: absolute;
-  top: -1px;
-  left: -2px;
-  padding: 0px 2px;
-  font-size: 14px;
-  color: #ede4de;
-  background-color: #6a3f24;
-}
-
-.check {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 18px;
-  /* or 150% */
-  color: #6a3f24;
 }
 
 .connects-body-btn__item {
@@ -1309,6 +1259,173 @@ body.ie ._ibg img {
   -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 8px 8px rgba(0, 0, 0, 0.24);
           box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 8px 8px rgba(0, 0, 0, 0.24);
   border-radius: 2px;
+}
+
+/* для элемента input c type="checkbox" */
+
+.custom-checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+/* для элемента label, связанного с .custom-checkbox */
+
+.custom-checkbox + label {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* создание в label псевдоэлемента before со следующими стилями */
+
+.custom-checkbox + label::before {
+  content: "";
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  border: 1px solid #6a3f24;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+/* стили при наведении курсора на checkbox */
+
+.custom-checkbox:not(:disabled):not(:checked) + label:hover::before {
+  border-color: #6a3f24;
+}
+
+/* стили для активного чекбокса (при нажатии на него) */
+
+.custom-checkbox:not(:disabled):active + label::before {
+  background-color: #6a3f24;
+  border-color: #6a3f24;
+}
+
+/* стили для чекбокса, находящегося в фокусе */
+
+/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+
+.custom-checkbox:focus:not(:checked) + label::before {
+  border-color: #6a3f24;
+}
+
+/* стили для чекбокса, находящегося в состоянии checked */
+
+.custom-checkbox:checked + label::before {
+  border-color: #6a3f24;
+  background-color: #6a3f24;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+  background-size: 11px;
+}
+
+/* стили для чекбокса, находящегося в состоянии disabled */
+
+.custom-checkbox:disabled + label::before {
+  background-color: #6a3f24;
+}
+
+.custom-radio {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+/* для элемента label связанного с .custom-radio */
+
+.custom-radio + label {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* создание в label псевдоэлемента  before со следующими стилями */
+
+.custom-radio + label::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  border: 1px solid #6a3f24;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+/* стили при наведении курсора на радио */
+
+.custom-radio:not(:disabled):not(:checked) + label:hover::before {
+  border-color: #6a3f24;
+}
+
+/* стили для активной радиокнопки (при нажатии на неё) */
+
+.custom-radio:not(:disabled):active + label::before {
+  background-color: #6a3f24;
+  border-color: #6a3f24;
+}
+
+/* стили для радиокнопки, находящейся в фокусе */
+
+/* стили для радиокнопки, находящейся в фокусе и не находящейся в состоянии checked */
+
+.custom-radio:focus:not(:checked) + label::before {
+  border-color: #6a3f24;
+}
+
+/* стили для радиокнопки, находящейся в состоянии checked */
+
+.custom-radio:checked + label::before {
+  border-color: #6a3f24;
+  background: url("../img/icons/dot.svg") center no-repeat;
+  background-size: 6px 12px;
+}
+
+/* стили для радиокнопки, находящейся в состоянии disabled */
+
+.custom-radio:disabled + label::before {
+  background-color: #e9ecef;
+}
+
+.check-error {
+  position: absolute;
+  right: 0;
+  top: 30%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 20px;
+  /* identical to box height, or 182% */
+  color: #ed1b33;
 }
 
 .shadow-header {
@@ -5428,7 +5545,7 @@ body.ie ._ibg img {
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5454,13 +5571,91 @@ body.ie ._ibg img {
   border-radius: 2px;
 }
 
-.check-form {
+.checkbox-write {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.custom-checkbox-item {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+/* для элемента label, связанного с .custom-checkbox */
+
+.custom-checkbox-item + label {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* создание в label псевдоэлемента before со следующими стилями */
+
+.custom-checkbox-item + label::before {
+  content: "";
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  background: #fff;
+  border: 1px solid #6a3f24;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+
+/* стили при наведении курсора на checkbox */
+
+.custom-checkbox-item:not(:disabled):not(:checked) + label:hover::before {
+  border-color: #6a3f24;
+}
+
+/* стили для активного чекбокса (при нажатии на него) */
+
+.custom-checkbox-item:not(:disabled):active + label::before {
+  background-color: #6a3f24;
+  border-color: #6a3f24;
+}
+
+/* стили для чекбокса, находящегося в фокусе */
+
+/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
+
+.custom-checkbox-item:focus:not(:checked) + label::before {
+  border-color: #6a3f24;
+}
+
+/* стили для чекбокса, находящегося в состоянии checked */
+
+.custom-checkbox-item:checked + label::before {
+  border-color: #6a3f24;
+  background-color: #6a3f24;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+  background-size: 11px;
+}
+
+/* стили для чекбокса, находящегося в состоянии disabled */
+
+.custom-checkbox-item:disabled + label::before {
+  background-color: #fff;
 }
 
 .parnter-connection {
@@ -6680,6 +6875,11 @@ body.ie ._ibg img {
   ._container {
     max-width: none;
     padding: 0 20px;
+  }
+
+  .connects-body-check label p {
+    font-size: 10px;
+    margin: 0px 0px 0px 0px;
   }
 
   .top-header__columns {
@@ -7998,6 +8198,7 @@ body.ie ._ibg img {
   .parnter-connection {
     padding: 20px 0px 40px 0px;
     text-align: center;
+    line-height: 10px;
   }
 
   .parnter-connection__text {
