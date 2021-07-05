@@ -877,6 +877,12 @@ function initMap() {
 	const map = new google.maps.Map(document.getElementById("map"), {
 		zoom: 8,
 		center: { lat: -34.397, lng: 150.644 },
+		zoomControl: true,
+		mapTypeControl: false,
+		scaleControl: false,
+		streetViewControl: false,
+		rotateControl: false,
+		fullscreenControl: false
 	});
 	const mapTwo = new google.maps.Map(document.getElementById("map2"), {
 		zoom: 8,
@@ -888,7 +894,7 @@ function initMap() {
 	});
 	const geocoderr = new google.maps.Geocoder();
 	document.getElementById("submit").addEventListener("click", () => {
-		geocodeAddress(geocoderr, map);
+		geocodeAddress(geocoderr, mapTwo);
 	});
 }
 
@@ -1112,6 +1118,20 @@ clearButtonForm.addEventListener('click', () => {
 })
 
 
+
+
+function handleData() {
+    var form_data = new FormData(document.querySelector("form"));
+    if (!form_data.has("langs[]")) {
+        document.getElementById("chk_option_error").style.visibility = "visible";
+        return false;
+    }
+    else {
+        document.getElementById("chk_option_error").style.visibility = "hidden";
+        return true;
+    }
+
+}
 
 //let btn = document.querySelectorAll('button[type="submit"],input[type="submit"]');
 let forms = document.querySelectorAll('form');
@@ -1461,7 +1481,7 @@ function inputs_init(inputs) {
 					//'+38(999) 999 9999'
 					//'+375(99)999-99-99'
 					input.classList.add('_mask');
-					Inputmask("+375 (99) 9999999", {
+					Inputmask("+7(999) 999 9999", {
 						//"placeholder": '',
 						clearIncomplete: true,
 						clearMaskOnLostFocus: true,

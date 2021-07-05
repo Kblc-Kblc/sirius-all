@@ -1119,6 +1119,20 @@ clearButtonForm.addEventListener('click', () => {
 
 
 
+
+function handleData() {
+    var form_data = new FormData(document.querySelector("form"));
+    if (!form_data.has("langs[]")) {
+        document.getElementById("chk_option_error").style.visibility = "visible";
+        return false;
+    }
+    else {
+        document.getElementById("chk_option_error").style.visibility = "hidden";
+        return true;
+    }
+
+}
+
 //let btn = document.querySelectorAll('button[type="submit"],input[type="submit"]');
 let forms = document.querySelectorAll('form');
 if (forms.length > 0) {
@@ -1467,7 +1481,7 @@ function inputs_init(inputs) {
 					//'+38(999) 999 9999'
 					//'+375(99)999-99-99'
 					input.classList.add('_mask');
-					Inputmask("+375 (99) 9999999", {
+					Inputmask("+7(999) 999 9999", {
 						//"placeholder": '',
 						clearIncomplete: true,
 						clearMaskOnLostFocus: true,

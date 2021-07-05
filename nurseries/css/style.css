@@ -166,6 +166,18 @@ body._lock {
   margin: 0 auto;
 }
 
+.form__error {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 20px;
+  /* identical to box height, or 182% */
+  color: #ed1b33;
+}
+
 .btn {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -1037,6 +1049,7 @@ body.ie ._ibg img {
 }
 
 .connects-body__name {
+  position: relative;
   padding: 0px 0px 20px 0px;
 }
 
@@ -1054,6 +1067,7 @@ body.ie ._ibg img {
 
 .connects-body__adress {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__adress input {
@@ -1070,6 +1084,7 @@ body.ie ._ibg img {
 
 .connects-body__mail {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__mail input {
@@ -1086,6 +1101,7 @@ body.ie ._ibg img {
 
 .connects-body__tel {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__tel input {
@@ -1102,6 +1118,7 @@ body.ie ._ibg img {
 
 .connects-body__comment {
   padding: 0px 0px 20px 0px;
+  position: relative;
 }
 
 .connects-body__comment input {
@@ -1214,13 +1231,14 @@ body.ie ._ibg img {
 
 .connects-body-check {
   padding: 0px 0px 30px 0px;
+  position: relative;
 }
 
 .connects-body-check label p {
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 21px;
+  line-height: 18px;
   color: #6a3f24;
   margin: -3px 0px 0px 0px;
 }
@@ -1396,6 +1414,18 @@ body.ie ._ibg img {
 
 .custom-radio:disabled + label::before {
   background-color: #e9ecef;
+}
+
+.check-error {
+  position: absolute;
+  right: 0;
+  top: 30%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 20px;
+  /* identical to box height, or 182% */
+  color: #ed1b33;
 }
 
 .shadow-header {
@@ -6845,6 +6875,11 @@ body.ie ._ibg img {
   ._container {
     max-width: none;
     padding: 0 20px;
+  }
+
+  .connects-body-check label p {
+    font-size: 10px;
+    margin: 0px 0px 0px 0px;
   }
 
   .top-header__columns {
