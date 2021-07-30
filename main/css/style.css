@@ -307,9 +307,9 @@ body._lock {
   border-radius: 20px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
+input[type=text],
+input[type=email],
+input[type=tel],
 textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1435,11 +1435,18 @@ body.ie ._ibg img {
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   z-index: 120;
+  position: absolute;
+  left: 0;
+  top: 9%;
 }
 
 .header {
   padding: 30px 0px 25px 0px;
   background: #f5f1ee;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 130;
 }
 
 .header__content {
@@ -1450,7 +1457,7 @@ body.ie ._ibg img {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  z-index: 999;
+  z-index: 300;
 }
 
 .header__columns {
@@ -1709,7 +1716,7 @@ body.ie ._ibg img {
 }
 
 .hover-header__columns:nth-child(5) {
-  padding: 0px 0px 0px 40px;
+  padding: 0px 0px 0px 55px;
   width: 200px;
 }
 
@@ -1737,6 +1744,7 @@ body.ie ._ibg img {
 }
 
 .bottom-header:hover .hover-header {
+  content: "";
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1744,7 +1752,7 @@ body.ie ._ibg img {
   position: absolute;
   top: 100%;
   left: -3%;
-  z-index: 99;
+  z-index: -1;
 }
 
 .dropdown {
@@ -1762,7 +1770,7 @@ body.ie ._ibg img {
 }
 
 .dropdown:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -1796,7 +1804,7 @@ body.ie ._ibg img {
 }
 
 .dropdown-two:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -1829,7 +1837,7 @@ body.ie ._ibg img {
 }
 
 .dropdown-three:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -1862,7 +1870,7 @@ body.ie ._ibg img {
 }
 
 .dropdown-four:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -1895,7 +1903,7 @@ body.ie ._ibg img {
 }
 
 .dropdown-five:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -1927,7 +1935,7 @@ body.ie ._ibg img {
 }
 
 .dropdown-six:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -1960,7 +1968,7 @@ body.ie ._ibg img {
 }
 
 .dropdown-seven:after {
-  content: "\25BC";
+  content: "▼";
   position: absolute;
   top: 0.2vh;
   right: 0;
@@ -8739,7 +8747,7 @@ body.ie ._ibg img {
   }
 
   .event-item-info {
-    padding: 0px 00px 0px 00px;
+    padding: 0px 0px 0px 0px;
   }
 
   .event-item-info__date {
@@ -8772,7 +8780,7 @@ body.ie ._ibg img {
   }
 
   .news-item-info {
-    padding: 0px 00px 0px 00px;
+    padding: 0px 0px 0px 0px;
   }
 
   .news-item-info__title {
